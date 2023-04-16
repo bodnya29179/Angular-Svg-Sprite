@@ -18,13 +18,13 @@ export class SvgService {
   }
 
   getSvg(iconName: string): SVGSVGElement {
-    const svgIconElement = this.svgSprite.getElementById(iconName) as SVGSVGElement;
+    const svgElement = this.getSvgElement(iconName);
 
-    if (!svgIconElement) {
+    if (!svgElement) {
       throw new Error(`Icon with name ${ iconName } not found`);
     }
 
-    return svgIconElement;
+    return svgElement;
   }
 
   private async initializeSprite(): Promise<void> {
@@ -35,5 +35,10 @@ export class SvgService {
 
     this.svgSprite = div.children[0].cloneNode(true) as SVGSVGElement;
     this.isSpriteInitialized$.next(true);
+  }
+
+  private getSvgElement(iconName: string): SVGSVGElement {
+    return this.svgSprite.getElementById(iconName)
+      ?.cloneNode(true) as SVGSVGElement;
   }
 }
