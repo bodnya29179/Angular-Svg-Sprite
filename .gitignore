@@ -38,3 +38,6 @@ testem.log
 # System files
 .DS_Store
 Thumbs.db
+
+# Auto-generated sprites folder
+svg-sprite.svg
