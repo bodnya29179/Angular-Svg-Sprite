@@ -1,0 +1,12 @@
+:host {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  &::ng-deep {
+    svg {
+      width: inherit;
+      height: inherit;
+    }
+  }
+}

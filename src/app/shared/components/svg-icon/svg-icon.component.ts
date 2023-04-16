@@ -5,6 +5,7 @@ import { SvgService } from '../../services';
 @Component({
   selector: 'svg-icon',
   template: '',
+  styleUrls: ['./svg-icon.component.scss'],
 })
 export class SvgIconComponent implements OnChanges, OnInit, OnDestroy {
   @Input()
