@@ -25,6 +25,7 @@
     "@angular-devkit/build-angular": "^15.0.2",
     "@angular/cli": "~15.0.2",
     "@angular/compiler-cli": "^15.0.0",
+    "svg-sprite": "^2.0.2",
     "typescript": "~4.8.2"
   }
 }
