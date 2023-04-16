@@ -1,4 +1,4 @@
-import { Component, ElementRef, Input, OnChanges, OnDestroy, OnInit, SimpleChanges } from '@angular/core';
+import { ChangeDetectionStrategy, Component, ElementRef, Input, OnChanges, OnDestroy, OnInit, SimpleChanges } from '@angular/core';
 import { BehaviorSubject, filter, Subject, switchMap, takeUntil } from 'rxjs';
 import { SvgService } from '../../services';
 
@@ -6,6 +6,7 @@ import { SvgService } from '../../services';
   selector: 'svg-icon',
   template: '',
   styleUrls: ['./svg-icon.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class SvgIconComponent implements OnChanges, OnInit, OnDestroy {
   @Input()
