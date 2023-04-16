@@ -1,27 +1,44 @@
-# AngularSvgSprite
+# Angular SVG Sprite
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 15.0.2.
+## Installation
 
-## Development server
+Run the commands:
+* `npm install svg-sprite --save-dev`
+* `npm install onchange --save-dev`
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+## Steps
+### 1. Create the svg-sprite generation script:
+- Script file: [generate-svg-sprite.js](scripts/generate-svg-sprite.js).
 
-## Code scaffolding
+Where:
+- `ICONS_PATH` is the path where your svg-icons are located;
+- `SVG_SPRITE_PATH` is the path where your generated sprite will be located;
+- `SVG_SPRITE_FILENAME` is the name of the sprite that you want to save.
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+### 2. Create the services that work with sprite:
+- Sprite loader service: [sprite-loader.service.ts](src/app/shared/services/sprite-loader/sprite-loader.service.ts);
+- Svg service: [svg.service.ts](src/app/shared/services/svg/svg.service.ts).
 
-## Build
+### 3. Create the svg-icon component:
+- Svg icon component: [svg-icon.component.ts](src/app/shared/components/svg-icon/svg-icon.component.ts).
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+### 4. Add the commands to `package.json`:
+- `start` allows us to <ins>**generate the svg-sprite**</ins> when we run our app & <ins>**run the app**</ins>:
+    ```json
+    "start": "npm run generate-sprite && ng serve && npm run watch-sprite"
+    ```
 
-## Running unit tests
+- `build` allows us to <ins>**prepare the svg-sprite before making the app build**</ins> & <ins>**build the app**</ins>:
+    ```json
+    "build": "npm run generate-sprite && ng build"
+    ```
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+- `generate-sprite` allows us to <ins>**generate the svg-sprite file**</ins> by running the script:
+    ```json
+    "generate-sprite": "node scripts/generate-svg-sprite.js"
+    ```
 
-## Running end-to-end tests
-
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+- `watch-sprite` allows us to <ins>**listen the svg-icon changes during the running of app**</ins> (adding/editing/removing icons, etc.) & <ins>**re-generate the sprite build**</ins>: 
+    ```json
+    "watch-sprite": "onchange \"./src/assets/icons/**/*.svg\" --initial --kill -- npm run generate-sprite"
+    ```
