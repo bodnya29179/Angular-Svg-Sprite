@@ -1,0 +1,101 @@
+:host {
+  width: 100vw;
+  height: 100vh;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  .icon {
+    width: 100px;
+    height: 100px;
+
+    cursor: pointer;
+  }
+
+  &::ng-deep {
+    .angular-icon {
+      svg path {
+        fill: #dd1b16;
+      }
+
+      &:hover {
+        svg path {
+          fill: #b51914;
+        }
+      }
+    }
+
+    .nodejs-icon {
+      svg path {
+        fill: #68a063;
+      }
+
+      &:hover {
+        svg path {
+          fill: #537f50;
+        }
+      }
+    }
+
+    .power-icon {
+      svg path {
+        stroke: #6495ed;
+      }
+
+      &:hover {
+        svg path {
+          stroke: #305099;
+        }
+      }
+    }
+
+    .youtube-icon {
+      svg path {
+        fill: #ff0000;
+      }
+
+      &:hover {
+        svg path {
+          fill: #b90000;
+        }
+      }
+    }
+
+    .apple-icon {
+      svg path {
+        fill: #000000;
+      }
+
+      &:hover {
+        svg path {
+          fill: #555555;
+        }
+      }
+    }
+
+    .heart-icon {
+      svg path {
+        &:first-child {
+          stroke: #b90000;
+        }
+
+        &:last-child {
+          fill: #ff0000;
+        }
+      }
+
+      &:hover {
+        svg path {
+          &:first-child {
+            stroke: #870000;
+          }
+
+          &:last-child {
+            fill: #b90000;
+          }
+        }
+      }
+    }
+  }
+}
