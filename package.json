@@ -2,10 +2,8 @@
   "name": "angular-svg-sprite",
   "version": "0.0.0",
   "scripts": {
-    "ng": "ng",
     "start": "npm run generate-sprite && ng serve && npm run watch-sprite",
     "build": "npm run generate-sprite && ng build",
-    "watch": "ng build --watch --configuration development",
     "generate-sprite": "node scripts/generate-svg-sprite.js",
     "watch-sprite": "onchange \"./src/assets/icons/**/*.svg\" --initial --kill -- npm run generate-sprite"
   },
