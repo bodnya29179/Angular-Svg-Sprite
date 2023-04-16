@@ -10,7 +10,11 @@ const spriter = new SvgSpriter({
   /* Main output directory */
   dest: SVG_SPRITE_PATH,
   mode: {
-    view: {},
+    css: {
+      render: {
+        css: false,
+      },
+    },
   },
   svg: {
     /* Add namespace token to all CSS class names in SVG shapes */
@@ -61,7 +65,7 @@ spriter.compile((error, result, data) => {
     /* Write the generated sprite to folder */
     fs.writeFile(
       path.join(spriter.config.dest, SVG_SPRITE_FILENAME),
-      result.view.sprite.contents,
+      result.css.sprite.contents,
       (err) => { if (err) throw err; },
     );
   });
