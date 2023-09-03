@@ -52,7 +52,14 @@ Where:
     ```
 
 ### 5. Adding svg-icons to the `assets` folder.
-### 6. Using the svg-icon component:
+
+### 6. Adding the svg-sprite to the `.gitignore` file for not saving it:
+```gitignore
+# Auto-generated sprites folder
+svg-sprite.svg
+```
+
+### 7. Using the svg-icon component:
 Adding icons to template:
 ```html
 <svg-icon [src]="<your-icon-name-here>"></svg-icon>
