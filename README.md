@@ -10,9 +10,11 @@ The project aims to generate an SVG sprite that enables us to achieve the follow
 
 ## Installation
 
-Run the commands:
+Run the commands in your project:
 * `npm install svg-sprite --save-dev`
 * `npm install onchange --save-dev`
+* `npm install npm-run-all --save-dev`
+* `npm install uuid`
 
 ## Steps
 ### 1. Creating the svg-sprite generation script:
