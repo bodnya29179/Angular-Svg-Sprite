@@ -2,7 +2,8 @@
   "name": "angular-svg-sprite",
   "version": "0.0.0",
   "scripts": {
-    "start": "npm run generate-sprite && ng serve && npm run watch-sprite",
+    "start": "npm-run-all --parallel serve watch-sprite",
+    "serve": "npm run generate-sprite && ng serve",
     "build": "npm run generate-sprite && ng build",
     "generate-sprite": "node scripts/generate-svg-sprite.js",
     "watch-sprite": "onchange \"./src/assets/icons/**/*.svg\" --initial --kill -- npm run generate-sprite"
@@ -27,6 +28,7 @@
     "@angular/cli": "~15.0.2",
     "@angular/compiler-cli": "^15.0.0",
     "jsdom": "^24.1.1",
+    "npm-run-all": "^4.1.5",
     "onchange": "^7.1.0",
     "svg-sprite": "^2.0.2",
     "typescript": "~4.8.2"
