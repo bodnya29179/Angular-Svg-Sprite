@@ -5,7 +5,9 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: 20px;
+  align-content: center;
+  flex-wrap: wrap;
+  gap: 30px 20px;
 
   .icon {
     width: 100px;

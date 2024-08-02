@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { SpriteLoaderService } from '../sprite-loader/sprite-loader.service';
 import { BehaviorSubject, firstValueFrom, Observable } from 'rxjs';
+import { v4 as uuidv4 } from 'uuid';
 
 @Injectable()
 export class SvgService {
@@ -38,7 +39,48 @@ export class SvgService {
   }
 
   private getSvgElement(iconName: string): SVGSVGElement {
-    return this.svgSprite.getElementById(iconName)
-      ?.cloneNode(true) as SVGSVGElement;
+    const svgElement = this.svgSprite.getElementById(iconName) as SVGSVGElement;
+
+    return this.makeUniqueIds(svgElement);
+  }
+
+  private makeUniqueIds(svgElement: SVGSVGElement): SVGSVGElement {
+    if (!svgElement) {
+      return svgElement;
+    }
+
+    const clonedSvg = svgElement.cloneNode(true) as SVGSVGElement;
+    const gradients = clonedSvg.querySelectorAll('linearGradient, radialGradient');
+
+    if (gradients.length) {
+      const uniqueSuffix = uuidv4();
+
+      gradients.forEach((gradient) => {
+        const oldId = gradient.id;
+        const newId = oldId + uniqueSuffix;
+        gradient.id = newId;
+
+        this.setUniqueId(clonedSvg, 'fill', oldId, newId);
+        this.setUniqueId(clonedSvg, 'stroke', oldId, newId);
+      });
+    }
+
+    return clonedSvg;
+  }
+
+  private setUniqueId(svgElement: SVGSVGElement, property: 'fill' | 'stroke', oldId: string, newId: string): void {
+    const elements = svgElement.querySelectorAll(`[${property}="url(#${oldId})"]`);
+
+    if (!elements.length) {
+      return;
+    }
+
+    elements.forEach((element) => {
+      const propertyUrl = element.getAttribute(property);
+
+      if (propertyUrl && propertyUrl.includes(oldId)) {
+        element.setAttribute(property, `url(#${newId})`);
+      }
+    });
   }
 }

@@ -1,8 +1,6 @@
 const fs = require('fs');
 const path = require('path');
 const SvgSpriter = require('svg-sprite');
-const { v4: uuidv4 } = require('uuid');
-const { JSDOM } = require('jsdom');
 
 const ICONS_PATH = 'src/assets/icons';
 const SVG_SPRITE_PATH = 'src/assets/sprite';
@@ -43,55 +41,16 @@ function getSvgFiles(dirPath, arrayOfFiles) {
   return arrayOfFiles;
 }
 
-/* Generate unique IDs for linearGradients and radialGradients inside SVG files */
-function makeUniqueIds(svgContent) {
-  /* Parse the SVG string into a DOM object */
-  const dom = new JSDOM(svgContent, { contentType: 'image/svg+xml' });
-  const document = dom.window.document;
-  const svgElement = document.documentElement;
-
-  /* Return the original string if parsing failed */
-  if (!svgElement) {
-    return svgContent;
-  }
-
-  /* Select all linear and radial gradients */
-  const gradients = svgElement.querySelectorAll('linearGradient, radialGradient');
-
-  if (gradients.length) {
-    const uniqueSuffix = uuidv4();
-
-    gradients.forEach((gradient) => {
-      const oldId = gradient.id;
-      const newId = oldId + uniqueSuffix;
-      gradient.id = newId;
-      const elementsWithFill = svgElement.querySelectorAll(`[fill="url(#${oldId})"]`);
-
-      elementsWithFill.forEach((element) => {
-        const fillUrl = element.getAttribute('fill');
-
-        if (fillUrl && fillUrl.includes(oldId)) {
-          element.setAttribute('fill', `url(#${newId})`);
-        }
-      });
-    });
-  }
-
-  /* Serialize the DOM object back to an SVG string */
-  return svgElement.outerHTML;
-}
-
 const svgFiles = getSvgFiles(ICONS_PATH);
 
 /* Add SVG files to sprite */
 svgFiles.forEach((svgFile) => {
   const svgPath = path.relative(ICONS_PATH, svgFile);
-  const svgContent = fs.readFileSync(svgFile, { encoding: 'utf-8' });
 
   spriter.add(
     svgPath,
     path.basename(svgFile),
-    makeUniqueIds(svgContent),
+    fs.readFileSync(svgFile, { encoding: 'utf-8' }),
   );
 });
 
