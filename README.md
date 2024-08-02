@@ -31,9 +31,14 @@ Where:
 - Svg icon component: [svg-icon.component.ts](src/app/shared/components/svg-icon/svg-icon.component.ts).
 
 ### 4. Adding the commands to `package.json`:
-- `start` allows us to <ins>**generate the svg-sprite**</ins> when we run our app & <ins>**run the app**</ins>:
+- `start` allows us to <ins>**wait for svg-sprite generation and app startup**</ins>, and <ins>**begin monitoring svg file changes to regenerate the sprite as needed**</ins>:
     ```json
-    "start": "npm run generate-sprite && ng serve && npm run watch-sprite"
+    "start": "npm-run-all --parallel serve watch-sprite"
+    ```
+
+- `serve` allows us to <ins>**generate the svg-sprite**</ins> and run our app:
+    ```json
+    "serve": "npm run generate-sprite && ng serve"
     ```
 
 - `build` allows us to <ins>**prepare the svg-sprite before making the app build**</ins> & <ins>**build the app**</ins>:
@@ -66,20 +71,47 @@ Adding icons to template:
 ```
 
 Changing icon styles (optional):
-```scss
-svg-icon::ng-deep {
-  svg path {
-    fill: <some-color-here>;
+
+- Way #1: Changing colors by ::ng-deep.
+
+  ```scss
+  svg-icon::ng-deep {
+    svg path {
+      fill: <some-color-here>;
+    }
   }
-}
-```
-or
-```scss
-svg-icon::ng-deep {
-  svg path {
-    stroke: <some-color-here>;
+  ```
+  or
+  ```scss
+  svg-icon::ng-deep {
+    svg path {
+      stroke: <some-color-here>;
+    }
   }
-}
-```
+  ```
+  
+- Way #2: Changing colors by font color of the parent element.
+
+  ```svg
+  <svg xmlns="http://www.w3.org/2000/svg" ...>
+    <!-- fill -->
+    <path fill="currentColor" ... />
+    <!-- or stroke -->
+    <rect stroke="currentColor" ... />
+  </svg>
+  ```
+  and setting the font color in CSS / SCSS / SASS / Less.
+  ```scss
+  svg-icon {
+    color: <some-color-here>;
+  }
+  ```
 
 The usage of `fill` or `stroke` depends on the `<path>` type in the svg file.
+
+### ✨ New Features: Handling Gradient IDs
+
+During sprite generation, we <ins>ensure that all linear and radial gradient IDs in SVGs are
+unique</ins> to prevent conflicts when multiple icons use gradients. This prevents issues with color references when
+multiple SVGs are displayed, ensuring that each SVG maintains its intended gradient coloring even if others are added or
+removed from the DOM.
